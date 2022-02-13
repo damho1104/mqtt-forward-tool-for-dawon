@@ -10,9 +10,6 @@ from collections import OrderedDict
 from lib.log import log
 from lib.config.config import ConfigLoader
 from lib.mqtt.mqtt import MQTT
-from lib.mqtt.publish import MQTTPub
-
-mqtt_pub: MQTTPub = None
 
 
 class MQTTSub(MQTT):
@@ -35,12 +32,16 @@ class MQTTSub(MQTT):
         self.client.on_message = self.on_message
         self.client.on_connect_fail = self.on_connect_fail
         self.client.on_unsubscribe = self.on_unsubscribe
+        self.is_reconnected = False
+
+        self.make_topic()
 
         lib.user_info.device_name = self.mqtt_device_name
         lib.user_info.ip = self.ip
         lib.user_info.port = self.port
 
-        self.make_topic()
+    def subscribe(self):
+        self.subscribe_now(self.client, self.topic)
 
     @staticmethod
     def on_unsubscribe(client, userdata, mid):
@@ -49,23 +50,21 @@ class MQTTSub(MQTT):
     @staticmethod
     def on_connect_fail(client, userdata):
         log.warning(f"[{lib.user_info.device_name}] [SUB] Connection failed")
-        log.info(f'[{lib.user_info.device_name}] [SUB] wait 5 seconds and re-connect')
-        time.sleep(5)
-        client.reconnect()
+        MQTTSub.reconnect(client)
 
     @staticmethod
     def on_connect(client, userdata, flags, rc):
         if rc == 0:
             log.info(f"[{lib.user_info.device_name}] [SUB] connected OK")
+            if lib.mqtt_sub.is_reconnected:
+                MQTTSub.subscribe_now(client, lib.mqtt_sub.topic)
         else:
             log.warning(f"[{lib.user_info.device_name}] [SUB] Bad connection Returned code={rc}")
 
     @staticmethod
     def on_disconnect(client, userdata, flags, rc=0):
-        log.info(f'[{lib.user_info.device_name}] [SUB] {str(rc)}')
-        log.info(f'[{lib.user_info.device_name}] [SUB] wait 5 seconds and re-connect')
-        time.sleep(5)
-        client.reconnect()
+        log.info(f'[{lib.user_info.device_name}] [SUB] disconnected {str(rc)}')
+        MQTTSub.reconnect(client)
 
     @staticmethod
     def on_subscribe(client, userdata, mid, granted_qos):
@@ -73,11 +72,17 @@ class MQTTSub(MQTT):
 
     @staticmethod
     def on_message(client, userdata, msg):
-        global mqtt_pub
         payload_dict = json.loads(str(msg.payload.decode("utf-8")))
         log.debug(msg.topic)
-        mqtt_pub.publish(payload_dict, msg.topic)
+        lib.mqtt_pub.publish(payload_dict, msg.topic)
 
-    def subscribe(self):
-        self.client.subscribe(self.topic)
-        self.client.loop_forever()
+    @staticmethod
+    def reconnect(client):
+        log.info(f'[{lib.user_info.device_name}] [SUB] wait 5 seconds and re-connect')
+        time.sleep(5)
+        client.reconnect()
+        lib.mqtt_sub.is_reconnected = True
+
+    @staticmethod
+    def subscribe_now(client, topic: str):
+        client.subscribe(topic)
