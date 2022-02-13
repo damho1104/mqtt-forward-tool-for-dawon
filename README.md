@@ -1,6 +1,12 @@
 # MQTT forward tool
 - 내부 MQTT broker 의 특정 장치를 외부 MQTT broker 로 포워딩하기 위한 도구
 - 실행 전 config.json 을 실행파일과 동일한 경로에 만들어야 함
+## Release note
+### v1.0.1
+- 루트 인증서 추가 기능 추가
+### v1.0.0
+- 내부 MQTT broker 의 특정 장치를 외부 MQTT broker 로 포워딩 기능 추가
+- config.json 을 통한 설정 기능 추가
 ## Description of 'config.json'
 ```json
 {
