@@ -61,6 +61,8 @@ class MQTTPub(MQTT):
         log.info(f"[{lib.user_info.device_name}] [PUB] In on_pub callback, mid = {mid}")
 
     def publish(self, send_dict: dict):
+        if not self.client.is_connected():
+            self.connect()
         self.client.loop_start()
         self.client.publish(self.topic, json.dumps(send_dict), 1)
         self.client.loop_stop()
