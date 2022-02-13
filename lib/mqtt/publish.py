@@ -54,15 +54,13 @@ class MQTTPub(MQTT):
         log.info(f'[{lib.user_info.device_name}] [PUB] Disconnect {str(rc)}')
         log.info(f'[{lib.user_info.device_name}] [PUB] wait 5 seconds and re-connect')
         time.sleep(5)
-        client.connect(lib.user_info.ip, lib.user_info.port)
+        client.reconnect()
 
     @staticmethod
     def on_publish(client, userdata, mid):
         log.info(f"[{lib.user_info.device_name}] [PUB] In on_pub callback, mid = {mid}")
 
     def publish(self, send_dict: dict):
-        if not self.client.is_connected():
-            self.connect()
         self.client.loop_start()
         self.client.publish(self.topic, json.dumps(send_dict), 1)
         self.client.loop_stop()

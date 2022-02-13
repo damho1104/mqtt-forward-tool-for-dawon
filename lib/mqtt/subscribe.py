@@ -48,6 +48,9 @@ class MQTTSub(MQTT):
     @staticmethod
     def on_connect_fail(client, userdata):
         log.warning(f"[{lib.user_info.device_name}] [SUB] Connection failed")
+        log.info(f'[{lib.user_info.device_name}] [SUB] wait 5 seconds and re-connect')
+        time.sleep(5)
+        client.reconnect()
 
     @staticmethod
     def on_connect(client, userdata, flags, rc):
@@ -61,7 +64,7 @@ class MQTTSub(MQTT):
         log.info(f'[{lib.user_info.device_name}] [SUB] {str(rc)}')
         log.info(f'[{lib.user_info.device_name}] [SUB] wait 5 seconds and re-connect')
         time.sleep(5)
-        client.connect(lib.user_info.ip, lib.user_info.port)
+        client.reconnect()
 
     @staticmethod
     def on_subscribe(client, userdata, mid, granted_qos):
