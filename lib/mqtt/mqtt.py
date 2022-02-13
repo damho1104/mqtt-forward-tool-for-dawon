@@ -4,10 +4,12 @@ import ssl
 import paho.mqtt.client as mqtt
 from collections import OrderedDict
 from lib.config.config import ConfigLoader
+from lib.util.singletone import SingleTone
 
 
-class MQTT:
+class MQTT(SingleTone):
     def __init__(self, device_dict: OrderedDict, config: ConfigLoader):
+        super().__init__()
         self.config = config
         self.ip = ''
         self.port = -1
