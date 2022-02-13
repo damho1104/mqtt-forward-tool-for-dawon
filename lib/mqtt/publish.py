@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import json
+import time
 import paho.mqtt.client as mqtt
 import lib
 from collections import OrderedDict
@@ -32,6 +33,8 @@ class MQTTPub(MQTT):
         self.client.on_connect_fail = self.on_connect_fail
 
         lib.user_info.device_name = device_name
+        lib.user_info.ip = self.ip
+        lib.user_info.port = self.port
 
         self.connect()
 
@@ -49,6 +52,9 @@ class MQTTPub(MQTT):
     @staticmethod
     def on_disconnect(client, userdata, flags, rc=0):
         log.info(f'[{lib.user_info.device_name}] [PUB] Disconnect {str(rc)}')
+        log.info(f'[{lib.user_info.device_name}] [PUB] wait 5 seconds and re-connect')
+        time.sleep(5)
+        client.connect(lib.user_info.ip, lib.user_info.port)
 
     @staticmethod
     def on_publish(client, userdata, mid):
