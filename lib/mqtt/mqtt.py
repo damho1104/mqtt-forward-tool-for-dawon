@@ -11,7 +11,7 @@ class MQTT:
         self.ip = ''
         self.port = -1
         self.topic_keyword = device_dict.get('topic')
-        self.topic = ''
+        self.topic = None
         self.client_id = f'DAWONDNS-'
         self.user = device_name
         self.password = ''
@@ -22,7 +22,10 @@ class MQTT:
         self.is_already_set_cert = False
 
     def make_topic(self):
-        self.topic = f'{self.topic_keyword}.v1/DAWONDNS-{self.dawon_device_name}-{self.dawon_device_id}/iot-server/notify/json'
+        if self.topic is not None:
+            return
+        # self.topic = f'{self.topic_keyword}.v1/DAWONDNS-{self.dawon_device_name}-{self.dawon_device_id}/iot-server/notify/json'
+        self.topic = f'{self.topic_keyword}/#'
 
     def connect(self):
         self.make_topic()
