@@ -9,18 +9,19 @@ from lib.mode.parallel import run_pub_sub
 
 
 def main():
-    Console.title_message(f'MQTT Forward tool v1.0.0')
+    Console.title_message(f'MQTT Forward tool v1.0.1')
     try:
         config = ConfigLoader()
-        arg_list = [(device_name, config.get_client_cert_path(), config.get_client_cert_key_path()) for device_name in
-                    config.get_device_list()]
+        # arg_list = [
+        #     (device_name, config.get_root_cert_path(), config.get_client_cert_path(), config.get_client_cert_key_path())
+        #     for device_name in config.get_device_list()]
         device_cnt = len(config.get_device_list())
         Console.info_message(f'The number of devices: {device_cnt}')
 
         with multiprocessing.Pool(device_cnt,
                                   log.multiprocess_init,
                                   initargs=[log.get_log_file_path()]) as pool:
-            for device_name, result in pool.map(run_pub_sub, arg_list):
+            for device_name, result in pool.map(run_pub_sub, config.get_device_list()):
                 log.warning(f'{device_name}: {result}')
         return True
     except Exception as e:

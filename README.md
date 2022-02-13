@@ -1,6 +1,12 @@
 # MQTT forward tool
 - 내부 MQTT broker 의 특정 장치를 외부 MQTT broker 로 포워딩하기 위한 도구
 - 실행 전 config.json 을 실행파일과 동일한 경로에 만들어야 함
+## Release note
+### v1.0.1
+- 루트 인증서 추가 기능 추가
+### v1.0.0
+- 내부 MQTT broker 의 특정 장치를 외부 MQTT broker 로 포워딩 기능 추가
+- config.json 을 통한 설정 기능 추가
 ## Description of 'config.json'
 ```json
 {
@@ -22,6 +28,7 @@
     }
   },
   "certs": {
+    "root_cert_path": "[ROOT_인증서.crt 경로]",
     "client_cert_path": "[클라이언트_인증서.crt 경로]",
     "client_cert_key_path": "[클라이언트_인증서.key 경로]"
   }
@@ -50,6 +57,7 @@
     }
   },
   "certs": {
+    "root_cert_path": "C:\\PowerManager\\certificate\\ca.crt",
     "client_cert_path": "C:\\PowerManager\\certificate\\C.crt",
     "client_cert_key_path": "C:\\PowerManager\\certificate\\private\\C.key"
   }
@@ -76,6 +84,7 @@
     }
   },
   "certs": {
+    "root_cert_path": "/usr/PowerManager/certificate/ca.crt",
     "client_cert_path": "/usr/PowerManager/certificate/C.crt",
     "client_cert_key_path": "/usr/PowerManager/certificate/private/C.key"
   }
