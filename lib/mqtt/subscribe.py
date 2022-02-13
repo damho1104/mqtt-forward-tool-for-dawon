@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import json
+import time
+
 import lib
 import paho.mqtt.client as mqtt
 from collections import OrderedDict
@@ -36,6 +38,8 @@ class MQTTSub(MQTT):
         self.client.on_unsubscribe = self.on_unsubscribe
 
         lib.user_info.device_name = device_name
+        lib.user_info.ip = self.ip
+        lib.user_info.port = self.port
 
     @staticmethod
     def on_unsubscribe(client, userdata, mid):
@@ -44,6 +48,9 @@ class MQTTSub(MQTT):
     @staticmethod
     def on_connect_fail(client, userdata):
         log.warning(f"[{lib.user_info.device_name}] [SUB] Connection failed")
+        log.info(f'[{lib.user_info.device_name}] [SUB] wait 5 seconds and re-connect')
+        time.sleep(5)
+        client.reconnect()
 
     @staticmethod
     def on_connect(client, userdata, flags, rc):
@@ -55,6 +62,9 @@ class MQTTSub(MQTT):
     @staticmethod
     def on_disconnect(client, userdata, flags, rc=0):
         log.info(f'[{lib.user_info.device_name}] [SUB] {str(rc)}')
+        log.info(f'[{lib.user_info.device_name}] [SUB] wait 5 seconds and re-connect')
+        time.sleep(5)
+        client.reconnect()
 
     @staticmethod
     def on_subscribe(client, userdata, mid, granted_qos):

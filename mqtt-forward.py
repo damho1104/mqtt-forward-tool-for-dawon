@@ -9,7 +9,7 @@ from lib.mode.parallel import run_pub_sub
 
 
 def main():
-    Console.title_message(f'MQTT Forward tool v1.0.1')
+    Console.title_message(f'MQTT Forward tool v1.0.2')
     try:
         config = ConfigLoader()
         # arg_list = [
