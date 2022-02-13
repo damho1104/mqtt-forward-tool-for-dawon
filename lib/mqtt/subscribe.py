@@ -8,6 +8,7 @@ import paho.mqtt.client as mqtt
 from collections import OrderedDict
 
 from lib.log import log
+from lib.config.config import ConfigLoader
 from lib.mqtt.mqtt import MQTT
 from lib.mqtt.publish import MQTTPub
 
@@ -15,20 +16,18 @@ mqtt_pub: MQTTPub = None
 
 
 class MQTTSub(MQTT):
-    def __init__(self, device_name: str, device_dict: OrderedDict):
-        super().__init__(device_name, device_dict)
+    def __init__(self, device_dict: OrderedDict, config: ConfigLoader):
+        super().__init__(device_dict, config)
         sub_dict: OrderedDict = device_dict.get('subscribe')
 
         self.is_cert_mode: bool = sub_dict.get('use_cert')
         self.ip: str = sub_dict.get('ip')
         self.port: str = sub_dict.get('port')
         self.password: str = sub_dict.get('password')
-
-        # self.client_id = f'DAWONDNS-[DEVICE_NAME]'
-        self.client_id = f'DAWONDNS-{device_name}'
+        self.client_id = f'DAWONDNS-{self.mqtt_device_name}'
 
         self.client = mqtt.Client(self.client_id)
-        self.client.username_pw_set(device_name, self.password)
+        self.client.username_pw_set(self.mqtt_device_name, self.password)
 
         self.client.on_connect = self.on_connect
         self.client.on_disconnect = self.on_disconnect
@@ -37,9 +36,11 @@ class MQTTSub(MQTT):
         self.client.on_connect_fail = self.on_connect_fail
         self.client.on_unsubscribe = self.on_unsubscribe
 
-        lib.user_info.device_name = device_name
+        lib.user_info.device_name = self.mqtt_device_name
         lib.user_info.ip = self.ip
         lib.user_info.port = self.port
+
+        self.make_topic()
 
     @staticmethod
     def on_unsubscribe(client, userdata, mid):
@@ -74,7 +75,8 @@ class MQTTSub(MQTT):
     def on_message(client, userdata, msg):
         global mqtt_pub
         payload_dict = json.loads(str(msg.payload.decode("utf-8")))
-        mqtt_pub.publish(payload_dict)
+        log.debug(msg.topic)
+        mqtt_pub.publish(payload_dict, msg.topic)
 
     def subscribe(self):
         self.client.subscribe(self.topic)
