@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from collections import OrderedDict
-from lib.util.console import Console
 from lib.config.config import ConfigLoader
 from lib.mqtt import subscribe
 from lib.mqtt.publish import MQTTPub

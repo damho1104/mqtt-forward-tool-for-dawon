@@ -9,7 +9,7 @@ from lib.mode.run_forward import run_mqtt_forward
 
 
 def main():
-    Console.title_message(f'MQTT Forward tool v1.0.2')
+    Console.title_message(f'MQTT Forward tool v1.0.3')
     try:
         config = ConfigLoader()
         run_mqtt_forward(config)
