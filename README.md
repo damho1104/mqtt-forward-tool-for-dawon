@@ -2,6 +2,8 @@
 - 내부 MQTT broker 의 특정 장치를 외부 MQTT broker 로 포워딩하기 위한 도구
 - 실행 전 config.json 을 실행파일과 동일한 경로에 만들어야 함
 ## Release note
+### v1.0.3
+- topic 처리 버그 수정
 ### v1.0.2
 - subscribe/publish re-connect 기능 추가
 ### v1.0.1
@@ -12,10 +14,11 @@
 ## Description of 'config.json'
 ```json
 {
-  "[SUBSCRIBE 장치명]": {
+  "info": {
+    "mqtt_device_name": "[SUBSCRIBE 장치명]",
     "device_name": "PM-B540-W[실제 장치명]",
     "device_id": "[실제 DEVICE ID]",
-    "topic": "dwd",
+    "topic": "[TOPIC]",
     "subscribe": {
       "use_cert": false,
       "ip": "[내부 IP]",
@@ -41,10 +44,11 @@
 ### - Windows
 ```json
 {
-  "MQTTSUB": {
+  "info": {
+    "mqtt_device_name": "[SUBSCRIBE 장치명]",
     "device_name": "PM-B540-W",
     "device_id": "wg21442dsfg20b",
-    "topic": "dwd",
+    "topic": "dwd.v1",
     "subscribe": {
       "use_cert": false,
       "ip": "192.168.1.3",
@@ -68,10 +72,11 @@
 ### - Linux
 ```json
 {
-  "MQTTSUB": {
+  "info": {
+    "mqtt_device_name": "[SUBSCRIBE 장치명]",
     "device_name": "PM-B540-W",
     "device_id": "wg21442dsfg20b",
-    "topic": "dwd",
+    "topic": "dwd.v1",
     "subscribe": {
       "use_cert": false,
       "ip": "192.168.1.3",

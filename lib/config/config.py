@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import os
-#from collections import OrderedDict
+from collections import OrderedDict
 from lib.util.file import FileUtil
+from lib import Console
 
 
 class ConfigLoader:
@@ -10,7 +11,12 @@ class ConfigLoader:
         self.config_path = FileUtil.get_path('config.json')
         if not os.path.exists(self.config_path):
             raise FileNotFoundError(self.config_path)
+
+        Console.info_message(f'Load config(file: {self.config_path})')
         self.config_dict = FileUtil.get_json_content_from_path(self.config_path)
+
+    def get_info_dict(self) -> OrderedDict:
+        return self.config_dict.get('info', {})
 
     def get_client_cert_path(self) -> str:
         return self.config_dict.get('certs', {}).get('client_cert_path', '')
