@@ -18,5 +18,8 @@ class ConfigLoader:
     def get_client_cert_key_path(self) -> str:
         return self.config_dict.get('certs', {}).get('client_cert_key_path', '')
 
+    def get_root_cert_path(self) -> str:
+        return self.config_dict.get('certs', {}).get('root_cert_path', None)
+
     def get_device_list(self) -> list:
         return [key for key in self.config_dict.keys() if key != 'certs']

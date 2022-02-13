@@ -27,7 +27,8 @@ class MQTT:
         self.make_topic()
         if self.is_cert_mode:
             config = ConfigLoader()
-            self.client.tls_set(certfile=config.get_client_cert_path(),
+            self.client.tls_set(ca_certs=config.get_root_cert_path(),
+                                certfile=config.get_client_cert_path(),
                                 keyfile=config.get_client_cert_key_path(),
                                 tls_version=ssl.PROTOCOL_TLSv1_2)
         self.client.connect(self.ip, self.port)

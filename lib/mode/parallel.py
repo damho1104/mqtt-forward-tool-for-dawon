@@ -13,7 +13,7 @@ execute_counter = multiprocessing.Value('i', 0)
 def run_pub_sub(arg_packed):
 
     global execute_counter
-    device_name, cert_path, cert_key_path = arg_packed
+    device_name = arg_packed
 
     with execute_counter.get_lock():
         Console.check_message(f'Device: {device_name}')

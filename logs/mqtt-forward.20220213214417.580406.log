@@ -1,0 +1,8 @@
+[2022-02-13 21:44:17,678] [INFO    ] [18436] [Console] MQTT Forward tool v1.0.0
+[2022-02-13 21:44:17,679] [INFO    ] [18436] [Console] The number of devices: 1
+[2022-02-13 21:44:17,905] [INFO    ] [12548] [Console] - Device: MQTTSUB01
+[2022-02-13 21:44:17,960] [INFO    ] [12548] [MQTTSUB01] [SUB] connected OK
+[2022-02-13 21:44:17,961] [INFO    ] [12548] [MQTTSUB01] [SUB] subscribed: 1 (0,)
+[2022-02-13 21:44:22,920] [INFO    ] [13848] [MQTTSUB01] [PUB] connected OK
+[2022-02-13 21:44:22,926] [INFO    ] [13848] [MQTTSUB01] [PUB] In on_pub callback, mid = 1
+[2022-02-13 21:44:23,044] [INFO    ] [21804] [MQTTSUB01] [PUB] In on_pub callback, mid = 2

@@ -22,6 +22,7 @@
     }
   },
   "certs": {
+    "root_cert_path": "[ROOT_인증서.crt 경로]",
     "client_cert_path": "[클라이언트_인증서.crt 경로]",
     "client_cert_key_path": "[클라이언트_인증서.key 경로]"
   }
@@ -50,6 +51,7 @@
     }
   },
   "certs": {
+    "root_cert_path": "C:\\PowerManager\\certificate\\ca.crt",
     "client_cert_path": "C:\\PowerManager\\certificate\\C.crt",
     "client_cert_key_path": "C:\\PowerManager\\certificate\\private\\C.key"
   }
@@ -76,6 +78,7 @@
     }
   },
   "certs": {
+    "root_cert_path": "/usr/PowerManager/certificate/ca.crt",
     "client_cert_path": "/usr/PowerManager/certificate/C.crt",
     "client_cert_key_path": "/usr/PowerManager/certificate/private/C.key"
   }
