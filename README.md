@@ -15,7 +15,7 @@
   "[SUBSCRIBE 장치명]": {
     "device_name": "PM-B540-W[실제 장치명]",
     "device_id": "[실제 DEVICE ID]",
-    "topic": "dwd",
+    "topic": "[TOPIC]",
     "subscribe": {
       "use_cert": false,
       "ip": "[내부 IP]",
@@ -44,7 +44,7 @@
   "MQTTSUB": {
     "device_name": "PM-B540-W",
     "device_id": "wg21442dsfg20b",
-    "topic": "dwd",
+    "topic": "dwd.v1",
     "subscribe": {
       "use_cert": false,
       "ip": "192.168.1.3",
@@ -71,7 +71,7 @@
   "MQTTSUB": {
     "device_name": "PM-B540-W",
     "device_id": "wg21442dsfg20b",
-    "topic": "dwd",
+    "topic": "dwd.v1",
     "subscribe": {
       "use_cert": false,
       "ip": "192.168.1.3",
