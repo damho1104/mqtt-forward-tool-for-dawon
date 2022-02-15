@@ -2,6 +2,8 @@
 - 내부 MQTT broker 의 특정 장치를 외부 MQTT broker 로 포워딩하기 위한 도구
 - 실행 전 config.json 을 실행파일과 동일한 경로에 만들어야 함
 ## Release note
+### v1.0.4
+- client id, user 설정 기능 추가
 ### v1.0.3
 - topic 처리 버그 수정
 ### v1.0.2
@@ -23,12 +25,16 @@
       "use_cert": false,
       "ip": "[내부 IP]",
       "port": [내부 PORT, int값],
+      "client_id": "[CLIENT_ID]",
+      "user": "[USERNAME]",
       "password": "[장치 비밀번호]"
     },
     "publish": {
       "use_cert": true,
       "ip": "[외부 도메인, 외부 IP]",
       "port": 8883[외부 PORT, int값, SSL 포트로 하는 것을 권장],
+      "client_id": "[CLIENT_ID]",
+      "user": "[USERNAME]",
       "password": "[장치 비밀번호]"
     }
   },
