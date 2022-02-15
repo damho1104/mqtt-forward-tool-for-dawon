@@ -16,11 +16,7 @@ class MQTT(SingleTone):
         self.topic_keyword = device_dict.get('topic')
         self.topic = None
         self.client_id = f'DAWONDNS-'
-        self.mqtt_device_name = device_dict.get('mqtt_device_name')
-        self.user = self.mqtt_device_name
         self.password = ''
-        self.dawon_device_name = device_dict.get('device_name')
-        self.dawon_device_id = device_dict.get('device_id')
         self.is_cert_mode = False
         self.client: mqtt.Client = None
         self.is_already_set_cert = False
@@ -28,7 +24,6 @@ class MQTT(SingleTone):
     def make_topic(self):
         if self.topic is not None:
             return
-        # self.topic = f'{self.topic_keyword}.v1/DAWONDNS-{self.dawon_device_name}-{self.dawon_device_id}/iot-server/notify/json'
         self.topic = f'{self.topic_keyword}/#'
 
     def connect(self):

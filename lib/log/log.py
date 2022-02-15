@@ -75,7 +75,7 @@ def console(msg):
 
 
 def debug(msg):
-    msg = f'[{getframeinfo(currentframe().f_back).filename}:{getframeinfo(currentframe().f_back).lineno}] {msg}'
+    msg = f'[{getframeinfo(currentframe().f_back.f_back).filename}:{getframeinfo(currentframe().f_back.f_back).lineno}] {msg}'
     log(logging.DEBUG, msg)
 
 
